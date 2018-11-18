@@ -65,3 +65,95 @@ export const actions = {
     }
   }
 };
+
+const initialState = {
+  isOpen: false,
+  accept: {
+    isFetching: false,
+    errors: null
+  },
+  reject: {
+    isFetching: false,
+    errors: null
+  }
+};
+
+export let gdprReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.GET_GDPR_STATUS: {
+      return {
+        ...state,
+        isOpen: false
+      }
+    }
+    case actionTypes.GET_GDPR_STATUS_SUCCESS: {
+      return {
+        ...state,
+        isOpen: true
+      }
+    }
+    case actionTypes.ACCEPT_GDPR: {
+      return {
+        ...state,
+        accept: {
+          ...state.accept,
+          isFetching: true,
+          errors: null
+        }
+      }
+    }
+    case actionTypes.ACCEPT_GDPR_SUCCESS: {
+      return {
+        ...state,
+        accept: {
+          ...state.accept,
+          isFetching: false
+        },
+        isOpen: false
+      }
+    }
+    case actionTypes.ACCEPT_GDPR_FAILURE: {
+      return {
+        ...state,
+        accept: {
+          ...state.accept,
+          isFetching: false,
+          errors: action.error
+        }
+      }
+    }
+    case actionTypes.REJECT_GDPR: {
+      return {
+        ...state,
+        reject: {
+          ...state.reject,
+          isFetching: true,
+          errors: null
+        }
+      }
+    }
+    case actionTypes.REJECT_GDPR_SUCCESS: {
+      return {
+        ...state,
+        reject: {
+          ...state.reject,
+          isFetching: false
+        },
+        isOpen: false
+      }
+    }
+    case actionTypes.REJECT_GDPR_FAILURE: {
+      return {
+        ...state,
+        reject: {
+          ...state.reject,
+          isFetching: false,
+          errors: action.error
+        }
+      }
+    }
+
+    default:
+      return state;
+  }
+}
